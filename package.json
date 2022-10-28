@@ -24,11 +24,13 @@
   "dependencies": {
     "@babel/core": "^7.19.3",
     "babel-polyfill": "^6.26.0",
+    "bootstrap": "^5.2.2",
     "connected-react-router": "^6.9.3",
     "history": "^4.10.1",
     "isomorphic-fetch": "^2.2.1",
     "jest": "^24.9.0",
     "react": "^16.14.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.9",
     "react-router": "^5.0.1",
