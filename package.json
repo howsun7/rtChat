@@ -36,7 +36,8 @@
     "redux": "^4.2.0",
     "redux-freeze": "^0.1.7",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "socket.io-client": "^4.5.3"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.19.3",
