@@ -21,6 +21,7 @@ app.config['JWT_SECRET_KEY'] = 'iambadsecretchangeme'
 
 
 from models import db
+import commands
 
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
@@ -47,6 +48,8 @@ def user_signup():
     return 'success'
 
 
+
+
 @app.route('/api/items')
 def items():
   '''Sample API route for data'''
@@ -63,3 +66,4 @@ def index(path):
   '''Return index.html for all non-api routes'''
   #pylint: disable=unused-argument
   return send_from_directory(app.static_folder, 'index.html')
+
