@@ -19,7 +19,9 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config['JWT_SECRET_KEY'] = 'iambadsecretchangeme'
 
-db = SQLAlchemy(app)
+
+from models import db
+
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
 jwt = JWTManager(app)
@@ -51,7 +53,6 @@ def items():
   return jsonify([{'title': 'A'}, {'title': 'B'}])
 
 
-@app.route('/api/')
 ##
 # View route
 ##
