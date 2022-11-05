@@ -1,14 +1,15 @@
 '''server/app.py - main api app declaration'''
 import os
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
-from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+
+
 
 '''Main wrapper for app creation'''
 app = Flask(__name__, static_folder='../build')
@@ -20,11 +21,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'ap
 app.config['JWT_SECRET_KEY'] = 'iambadsecretchangeme'
 
 
-from models import db
+from models import db, User
+from serializers import user_schema, users_schema
 import commands
 
+
 migrate = Migrate(app, db)
-ma = Marshmallow(app)
 jwt = JWTManager(app)
 
 ##
@@ -45,7 +47,8 @@ def user_signup():
     new_user = User(email=user_email, password=user_pwd)
     db.session.add(new_user)
     db.session.commit()
-    return 'success'
+    result = user_schema.dump(new_user)
+    return jsonify(result), 201
 
 
 
