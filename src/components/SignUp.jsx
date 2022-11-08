@@ -1,3 +1,6 @@
+import { useHistory } from "react-router-dom";
+import { login, useAuth, logout } from '../auth';
+import axios from 'axios';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -6,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 function SignUp() {
 
 	const [inputs, setInputs] = React.useState({});
+	const history = useHistory();
 
 	const handleChange = (event) => {
 		const name = event.target.name;
@@ -16,9 +20,21 @@ function SignUp() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log(inputs);
-	}
+		const url = 'http://localhost:7082/api/user/register';
 
+		axios.post(url, inputs).then((res) => {
+			const data = res.data;
+
+			console.log(data.token);
+			login(data.token);
+			history.push('/');
+		}).catch((error) => {
+			if (error.response) {
+				console.log(error.response);
+			}
+		})
+
+	}
 
 	return (
 		<>
@@ -47,5 +63,6 @@ function SignUp() {
 		</>
 	)
 }
+
 
 export default SignUp;

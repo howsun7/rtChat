@@ -66,6 +66,12 @@ def user_login():
     access_token = create_access_token(identity=user_email) 
     return jsonify(token=access_token)
 
+@app.route('/api/token/refresh', methods=['POST'])
+@jwt_required()
+def refresh():
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity)
+    return jsonify(token=access_token, is_refresh=True)
 
 @app.route('/api/items')
 def items():
