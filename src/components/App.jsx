@@ -5,11 +5,17 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link, NavLink } from 'react-router-dom';
 
-export default class AppWrapper extends React.Component {
-  render() {
-    return (
-      <div className='app-container'>
+import { useParams } from 'react-router-dom';
+import { routes } from '../routes';
 
+
+
+function App() {
+
+  // const params = useParams()
+ 
+  return (
+      <div className='app-container'>
         
         <Navbar bg="warning" variant="light">
         <Container>
@@ -17,6 +23,7 @@ export default class AppWrapper extends React.Component {
           <Nav className="me-auto">                        
             <Nav.Link to='/chat' as={NavLink}>rtChat</Nav.Link>
             <Nav.Link to='/signup' as={NavLink}>Sign up</Nav.Link>
+            <Nav.Link to='/login' as={NavLink}>Login</Nav.Link>  
             <Nav.Link to='/about' as={NavLink}>About</Nav.Link>  
             <Nav.Link to='/about/subroute' as={NavLink}>sdfs</Nav.Link>  
           </Nav>
@@ -24,12 +31,12 @@ export default class AppWrapper extends React.Component {
       </Navbar>
 
       <Container>
-      {this.props.children}
-
+        { routes }
       </Container>
 
       </div>
 
     )
-  }
 }
+export default App;
+

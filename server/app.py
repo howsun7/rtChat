@@ -19,7 +19,8 @@ CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config['JWT_SECRET_KEY'] = 'iambadsecretchangeme'
-
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 
 from models import db, User
 from serializers import user_schema, users_schema
