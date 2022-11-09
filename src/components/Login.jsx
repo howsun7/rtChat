@@ -3,9 +3,10 @@ import axios from 'axios';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import { Link, NavLink } from 'react-router-dom';
 
-
-function Login() {
+function Login(props) {
 	const [inputs, setInputs] = React.useState({});
 	const history = useHistory();
 
@@ -22,9 +23,7 @@ function Login() {
 
 		axios.post(url, inputs).then((res) => {
 			const data = res.data;
-
-			console.log(data);
-
+			props.saveToken(data.token);
 			history.push('/');
 		}).catch((error) => {
 			if (error.response) {
@@ -52,11 +51,10 @@ function Login() {
 	      {/*<Form.Group className="mb-3" controlId="formBasicCheckbox">
 	        <Form.Check type="checkbox" label="Check me out" />
 	      </Form.Group>*/}
-	      <Button variant="danger" type="submit">
+	      <Button variant="warning" type="submit">
 	        Login
 	      </Button>
 	    </Form>
-
 		</>
 	)
 }

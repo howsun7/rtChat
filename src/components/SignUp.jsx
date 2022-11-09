@@ -1,12 +1,12 @@
 import { useHistory } from "react-router-dom";
-import { login, useAuth, logout } from '../auth';
+// import { login, useAuth, logout } from '../auth';
 import axios from 'axios';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 
-function SignUp() {
+function SignUp(props) {
 
 	const [inputs, setInputs] = React.useState({});
 	const history = useHistory();
@@ -25,8 +25,8 @@ function SignUp() {
 		axios.post(url, inputs).then((res) => {
 			const data = res.data;
 
-			console.log(data.token);
-			login(data.token);
+			props.saveToken(data.token);
+			
 			history.push('/');
 		}).catch((error) => {
 			if (error.response) {

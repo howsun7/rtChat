@@ -8,11 +8,12 @@ import SignUp from './components/SignUp';
 
 
 const routes = (
-<Switch>
+
+  <Switch>
      <Route exact path='/' component={Home} />
        <Route path='/signup' component={SignUp} />
        <Route path='/login' component={Login} />
        <Route path='/about' component={About} />
-     </Switch>
+    </Switch>
 )
 export { routes };
