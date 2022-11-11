@@ -3,13 +3,9 @@ import { useRef } from 'react';
 
 function Home(props) {
   
-
-  const userData = useRef(props.location.state.user);
-  
   return (
     <div className='home'>
-      jlkjklj
-      <p>{userData.current.email}</p>
+      jlkjklj  
     </div>
   )
 }

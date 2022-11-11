@@ -30,7 +30,7 @@ function Login(props) {
 			// props.setUser(JSON.parse(JSON.stringify(data.user)));	
 
 			history.push({
-				pathname: '/',
+				pathname: '/chat',
 				state: {
 					user: JSON.parse(JSON.stringify(data.user))
 				}
