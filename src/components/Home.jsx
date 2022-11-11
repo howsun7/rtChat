@@ -1,14 +1,15 @@
 import React from 'react';
+import { useRef } from 'react';
 
-function Home() {
+function Home(props) {
+  
 
-  // fetch('http://localhost:7082/api/items')
-  //       .then(response => response.json())
-  //       .then(data => console.log(data));
-
+  const userData = useRef(props.location.state.user);
+  
   return (
     <div className='home'>
       jlkjklj
+      <p>{userData.current.email}</p>
     </div>
   )
 }

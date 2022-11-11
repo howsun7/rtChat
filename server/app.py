@@ -65,7 +65,8 @@ def user_login():
         return jsonify(msg='wrong password! try again!'), 401
 
     access_token = create_access_token(identity=user_email) 
-    return jsonify(token=access_token)
+    serialized_user = user_schema.dump(user)
+    return jsonify(token=access_token, user=serialized_user), 201
 
 @app.route('/api/token/refresh', methods=['POST'])
 @jwt_required()

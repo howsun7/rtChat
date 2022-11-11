@@ -23,8 +23,19 @@ function Login(props) {
 
 		axios.post(url, inputs).then((res) => {
 			const data = res.data;
+			
+			// login user (save token & upate user state)
 			props.saveToken(data.token);
-			history.push('/');
+		
+			// props.setUser(JSON.parse(JSON.stringify(data.user)));	
+
+			history.push({
+				pathname: '/',
+				state: {
+					user: JSON.parse(JSON.stringify(data.user))
+				}
+			});
+		
 		}).catch((error) => {
 			if (error.response) {
 				console.log(error.response);
