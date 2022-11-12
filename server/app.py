@@ -125,4 +125,4 @@ def disconnect():
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, port=7082)
