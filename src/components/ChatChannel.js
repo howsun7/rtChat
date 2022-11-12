@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import ChatInterface from './ChatInterface';
 
 function ChatChannel(props) {
 	const userData = useRef(props.location.state.user);
@@ -25,6 +26,8 @@ function ChatChannel(props) {
 
 			<p>{userData.current.email}</p>
 			
+			<ChatInterface />
+
 		</div>
 		</>
 	)
