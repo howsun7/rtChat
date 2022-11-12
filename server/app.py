@@ -9,13 +9,15 @@ from flask_jwt_extended import (
     JWTManager,
 )
 from flask_migrate import Migrate
+from flask_socketio import SocketIO, emit, send, join_room
 from flask_sqlalchemy import SQLAlchemy
 
 '''Main wrapper for app creation'''
 app = Flask(__name__, static_folder='../build')
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-CORS(app)
+
+# socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config['JWT_SECRET_KEY'] = 'iambadsecretchangeme'
@@ -23,11 +25,14 @@ app.config['JWT_SECRET_KEY'] = 'iambadsecretchangeme'
 # app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 
 from models import db, User
-from serializers import user_schema, users_schema
+from serializers import user_schema, users_schema, ma
 import commands
 
-
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
+db.init_app(app)
 migrate = Migrate(app, db)
+ma.init_app(app)
 jwt = JWTManager(app)
 
 ##
@@ -92,3 +97,32 @@ def index(path):
   #pylint: disable=unused-argument
   return send_from_directory(app.static_folder, 'index.html')
 
+
+## 
+# async services (socket.io) events
+##
+@socketio.on('connect')
+def connect():
+    print('path:', request.path)
+    emit('connected', {'data': f'{request.id}'})
+
+@socketio.on('message')
+def handle_message(data):
+    send(data)
+    print('received:', data)
+
+@socketio.on('join')
+def on_join(data):
+    user_email = data['email']
+    room = data['room']
+    join_room(room)
+    send(f'{user_email} has entered room', to=room)
+    
+@socketio.on('disconnect')
+def disconnect():
+    print('path:', request.path)
+    emit('disconnected')
+
+
+if __name__ == '__main__':
+    socketio.run(app)

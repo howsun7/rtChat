@@ -1,9 +1,8 @@
-from flask_marshmallow import Marshmallow
-from app import app
+from flask_marshmallow import Marshmallow, Schema
 
-ma = Marshmallow(app)
+ma = Marshmallow()
 
-class UserSchema(ma.Schema):
+class UserSchema(Schema):
 	class Meta:
 		fields = ('id', 'email',)
 
