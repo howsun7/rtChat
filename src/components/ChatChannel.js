@@ -10,6 +10,7 @@ function ChatChannel(props) {
 	const [channelId, setChannelId] = useState(null);
 	const [socketInstance, setSocketInstance] = useState(null);
 	const [isInChannel, setIsInChannel] = useState(false);
+	const [loading, setLoading] = useState(true);
 
   const handleClick = () => {
     if (isInChannel === false) {
@@ -17,6 +18,7 @@ function ChatChannel(props) {
       setChannelId(4);
     } else {
       setIsInChannel(false);
+      setSocketInstance(null);
     }
   };
 
@@ -28,6 +30,7 @@ function ChatChannel(props) {
 		          origin: "http://localhost:7081/",
 		        },
 		      });
+
 			setSocketInstance(socket);
 
 			console.log(socket);
@@ -36,14 +39,17 @@ function ChatChannel(props) {
 				console.log(res);
 			});
 
+			setLoading(false);
+
 			socket.on('disconnect', (res) => {
 				console.log('disconnect')
 			});
 
 			return function cleanup() {
 				socket.disconnect();
+				setLoading(true);
 			}
-		}
+		} 
 	}, [isInChannel])
 
 	// if (Object.keys(linkParams).length === 0 && !channelId)
@@ -69,7 +75,7 @@ function ChatChannel(props) {
 	      	</Button>
 			<p>{userData.current.email}</p>
 			
-			<ChatInterface />
+			{!loading && <ChatInterface socket={socketInstance} />}
 
 		</div> 
 			:

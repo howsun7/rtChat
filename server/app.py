@@ -109,9 +109,10 @@ def connect():
 
 @socketio.on('message')
 def handle_message(data):
-    send(data)
     print('received:', data)
-
+    # send({'message': data, 'sid': f'{request.sid}'})
+    emit('message', {'message': data, 'sid': f'{request.sid}'})
+    
 @socketio.on('join')
 def on_join(data):
     user_email = data['email']
