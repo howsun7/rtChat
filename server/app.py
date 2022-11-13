@@ -29,7 +29,8 @@ from serializers import user_schema, users_schema, ma
 import commands
 
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+# socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet", engineio_logger=True, logger=True)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
 db.init_app(app)
 migrate = Migrate(app, db)
 ma.init_app(app)
@@ -104,7 +105,7 @@ def index(path):
 @socketio.on('connect')
 def connect():
     print('path:', request.path)
-    emit('connected', {'data': f'{request.id}'})
+    emit("connect", {"sid":f"{request.sid}"})
 
 @socketio.on('message')
 def handle_message(data):
